@@ -11,8 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import java.util.Calendar
 import java.util.TimeZone
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         val etURL = findViewById<EditText>(R.id.etURL)
         val btnOpenURL = findViewById<Button>(R.id.btnOpenURL)
         val btnSetEvent = findViewById<Button>(R.id.btnSetEvent)
+        val btnGetPhoto = findViewById<Button>(R.id.btnGetPhoto)
+        val ivHasil = findViewById<ImageView>(R.id.ivHasil)
 
         btnKirimPesan.setOnClickListener {
             val sendIntent = Intent().apply {
@@ -146,6 +151,18 @@ class MainActivity : AppCompatActivity() {
             )
 
             datePickerDialog.show()
+        }
+
+        val cameraLauncher = registerForActivityResult(
+            ActivityResultContracts.TakePicturePreview()
+        ) { bitmap ->
+            if (bitmap != null) {
+                ivHasil.setImageBitmap(bitmap)
+            }
+        }
+
+        btnGetPhoto.setOnClickListener {
+            cameraLauncher.launch(null)
         }
     }
 }

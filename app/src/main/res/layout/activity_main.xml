@@ -44,4 +44,17 @@
         android:layout_height="wrap_content"
         android:text="Set Event Calendar" />
 
+    <Button
+        android:id="@+id/btnGetPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ambil Foto" />
+
+    <ImageView
+        android:id="@+id/ivHasil"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside" />
+
 </LinearLayout>
