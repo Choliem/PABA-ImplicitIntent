@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         val btnSetEvent = findViewById<Button>(R.id.btnSetEvent)
         val btnGetPhoto = findViewById<Button>(R.id.btnGetPhoto)
         val ivHasil = findViewById<ImageView>(R.id.ivHasil)
+        val btnBukaMaps = findViewById<Button>(R.id.btnBukaMaps)
 
         btnKirimPesan.setOnClickListener {
             val sendIntent = Intent().apply {
@@ -163,6 +164,50 @@ class MainActivity : AppCompatActivity() {
 
         btnGetPhoto.setOnClickListener {
             cameraLauncher.launch(null)
+        }
+
+        btnBukaMaps.setOnClickListener {
+
+            val latitude = "-7.24611"
+            val longitude = "112.73750"
+            val labelTempat = "Tugu Pahlawan"
+
+            val gmmIntentUri = Uri.parse(
+                "geo:$latitude,$longitude?q=$latitude,$longitude($labelTempat)"
+            )
+
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
+                setPackage("com.google.android.apps.maps")
+            }
+
+            if (mapIntent.resolveActivity(packageManager) != null) {
+                startActivity(mapIntent)
+            } else {
+                Toast.makeText(
+                    this,
+                    "Aplikasi Google Maps tidak ditemukan",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                val webUri = Uri.parse(
+                    "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude"
+                )
+
+                val webIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    webUri
+                )
+
+                try {
+                    startActivity(webIntent)
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this,
+                        "Tidak ada aplikasi browser yang tersedia",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 }
